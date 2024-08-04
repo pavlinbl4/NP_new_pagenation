@@ -6,6 +6,14 @@ from image_downloader import downloader
 
 # pip install lxml
 
+def date_convert(month_number):
+    months = {
+        1: 'Января', 2: 'Февраля', 3: 'Марта', 4: 'Апреля', 5: 'Мая', 6: 'Июня',
+        7: 'Июля', 8: 'Августа', 9: 'Сентября', 10: 'Октября', 11: 'Ноября', 12: 'Декабря'
+    }
+    return months.get(month_number, 'Invalid month')
+
+
 def cook_soup(count, base_url):
     headers = {'user-agent':
                    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -21,13 +29,17 @@ def cook_soup(count, base_url):
 def main():
     base_url = 'https://newprospect.ru'
     count = 1
-    while count < 12:
+
+    while count < 15:
         soup = cook_soup(count, base_url)
-        extract_article_data(base_url, soup)
+        extract_article_data(base_url, soup, month_number=7)
         count += 1
 
 
-def extract_article_data(base_url, soup):
+def extract_article_data(base_url, soup, month_number):
+    month_name = date_convert(month_number)
+    previous_month_name = date_convert(month_number - 1)
+
     # find all articles on page
     articles = soup.find_all('div', class_="tplarticle")
 
@@ -37,7 +49,7 @@ def extract_article_data(base_url, soup):
         article_date = article.find('div', class_="tplarticle-date").text
 
         # if found name of last month stop working
-        if 'Июня' in article_date:
+        if previous_month_name in article_date:
             break
 
         article_name = article.find('div', class_="tplarticle-title").text
@@ -45,7 +57,7 @@ def extract_article_data(base_url, soup):
 
         image_name = f'{article_date}__{article_name}'
 
-        if 'Июля' in article_date:
+        if month_name in article_date:
             print(article_date, article_name, article_image_link)
             # download images
             downloader(article_image_link, image_name, folder_path='/Volumes/big4photo/Documents/NewProspect/2024_7')
