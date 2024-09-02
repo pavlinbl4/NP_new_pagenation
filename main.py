@@ -1,10 +1,20 @@
+from pathlib import Path
+from datetime import datetime
+
 from bs4 import BeautifulSoup
 from requests import Session
 
+from gui_tools.select_month import select_month
 from image_downloader import downloader
 
 
 # pip install lxml
+
+def make_documents_folder(name):
+    folder_path = Path.home() / "Documents" / f"{name}"
+    folder_path.mkdir(parents=True, exist_ok=True)
+    return folder_path
+
 
 def date_convert(month_number):
     months = {
@@ -28,13 +38,14 @@ def cook_soup(count, base_url):
     return soup
 
 
-def main():
+def main(month_number):
     base_url = 'https://newprospect.ru'
+
     count = 1
 
     while count < 15:
         soup = cook_soup(count, base_url)
-        extract_article_data(base_url, soup, month_number=8)
+        extract_article_data(base_url, soup, month_number)
         count += 1
 
 
@@ -62,8 +73,10 @@ def extract_article_data(base_url, soup, month_number):
         if month_name in article_date:
             print(article_date, article_name, article_image_link)
             # download images
-            downloader(article_image_link, image_name, folder_path='/Volumes/big4photo/Documents/NewProspect/2024_8')
+            current_year = datetime.now().year
+            folder_path = make_documents_folder(f'NewProspect/{current_year}_{month_number}')
+            downloader(article_image_link, image_name, folder_path)
 
 
 if __name__ == '__main__':
-    main()
+    main(select_month())
