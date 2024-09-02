@@ -15,9 +15,11 @@ def date_convert(month_number):
 
 
 def cook_soup(count, base_url):
-    headers = {'user-agent':
-                   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
-                   'Chrome/127.0.0.0 Safari/537.36'}
+    headers = {
+        'user-agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
+            'Chrome/127.0.0.0 Safari/537.36'
+    }
     s = Session()
     s.headers.update(headers)
     work_url = f'{base_url}/?article={count}&pageId=1&hash=cbf05cb35393866fb263316a822d653e4971ece5'
@@ -32,7 +34,7 @@ def main():
 
     while count < 15:
         soup = cook_soup(count, base_url)
-        extract_article_data(base_url, soup, month_number=7)
+        extract_article_data(base_url, soup, month_number=8)
         count += 1
 
 
@@ -60,7 +62,7 @@ def extract_article_data(base_url, soup, month_number):
         if month_name in article_date:
             print(article_date, article_name, article_image_link)
             # download images
-            downloader(article_image_link, image_name, folder_path='/Volumes/big4photo/Documents/NewProspect/2024_7')
+            downloader(article_image_link, image_name, folder_path='/Volumes/big4photo/Documents/NewProspect/2024_8')
 
 
 if __name__ == '__main__':
