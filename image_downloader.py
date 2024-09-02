@@ -5,10 +5,12 @@ from tqdm import tqdm
 from pathlib import Path
 from PIL import Image
 from io import BytesIO
+
+
 # pip install requests Pillow
 
 
-def downloader(image_url: str,  image_name: str, folder_path: str,):
+def downloader(image_url: str, image_name: str, folder_path: Path):
     try:
         response = requests.get(image_url, stream=True)
 
