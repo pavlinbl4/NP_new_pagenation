@@ -1,7 +1,11 @@
+from pathlib import Path
+
 from bs4 import BeautifulSoup
 from requests import Session
 
+from gui_tools.select_month import select_month
 from image_downloader import downloader
+import os
 
 
 # pip install lxml
@@ -28,13 +32,13 @@ def cook_soup(count, base_url):
     return soup
 
 
-def main():
+def main(month_number):
     base_url = 'https://newprospect.ru'
     count = 1
 
     while count < 15:
         soup = cook_soup(count, base_url)
-        extract_article_data(base_url, soup, month_number=8)
+        extract_article_data(base_url, soup, month_number)
         count += 1
 
 
@@ -61,9 +65,13 @@ def extract_article_data(base_url, soup, month_number):
 
         if month_name in article_date:
             print(article_date, article_name, article_image_link)
+
+            Path(f'/Volumes/big4photo/Documents/NewProspect/2024_{month_number}' ).mkdir(exist_ok=True)
             # download images
-            downloader(article_image_link, image_name, folder_path='/Volumes/big4photo/Documents/NewProspect/2024_8')
+            downloader(article_image_link, image_name,
+                       folder_path=f'/Volumes/big4photo/Documents/NewProspect/2024_{month_number}')
 
 
 if __name__ == '__main__':
-    main()
+    month_number = select_month()
+    main(month_number)
