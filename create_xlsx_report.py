@@ -43,7 +43,6 @@ for row, image_path in enumerate(way_to_files.glob("*.JPG"), 1):
     worksheet.row_dimensions[row].height = 130  # задаю высоту столбца
 
     logger.info(image_path)
-    img = image_resize(image_path)
 
     for column in range(1, 5):
         # cells view
@@ -59,7 +58,7 @@ for row, image_path in enumerate(way_to_files.glob("*.JPG"), 1):
 
         worksheet[f'{get_column_letter(1)}{row}'].value = image_path.name.split("__")[0]
         worksheet[f'{get_column_letter(2)}{row}'].value = image_path.name.split("__")[1][:-4]
-        # logger.info(img)
+        img = image_resize(image_path)
         worksheet.add_image(img, f"{get_column_letter(3)}{row}")
         worksheet[f'{get_column_letter(4)}{row}'].value = 500
 
