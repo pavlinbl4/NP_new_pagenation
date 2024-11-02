@@ -66,10 +66,10 @@ def extract_article_data(base_url, soup, month_number):
         if month_name in article_date:
             print(article_date, article_name, article_image_link)
 
-            Path(f'/Volumes/big4photo/Documents/NewProspect/2024_{month_number}' ).mkdir(exist_ok=True)
+            (Path.home() / f"Documents/NewProspect/2024_{month_number}").mkdir(parents=True, exist_ok=True)
             # download images
             downloader(article_image_link, image_name,
-                       folder_path=f'/Volumes/big4photo/Documents/NewProspect/2024_{month_number}')
+                       folder_path=(Path.home() / f"Documents/NewProspect/2024_{month_number}"))
 
 
 if __name__ == '__main__':
