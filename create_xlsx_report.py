@@ -2,27 +2,29 @@
 Из скачанных парсером снимков нового проспекта за месяц генерю
 файл отчета с превью
 """
-from pathlib import Path
-from openpyxl import Workbook
-
 from datetime import datetime
-from openpyxl.utils import get_column_letter
-from files_and_folders.folder_in_MY_documents import make_documents_folder
+from pathlib import Path
+
+from loguru import logger
+from openpyxl import Workbook
 from openpyxl.styles import (
     Border, Side,
     Alignment, Font
 )
-from parsing.image_resize import image_resize
-from gui_tools.select_month import select_month
-from xlsx_tools.set_column_dimensions import set_column_dimensions
+from openpyxl.utils import get_column_letter
 
-from loguru import logger
+from gui_tools.select_month import select_month
+from parsing.image_resize import image_resize
+from xlsx_tools.set_column_dimensions import set_column_dimensions
 
 month_name = select_month()
 current_year = datetime.now().year
 
-way_to_files = Path(
-    f"{make_documents_folder('NewProspect')}/{current_year}_{month_name}")  # путь к папке с изображениями
+# way_to_files = Path(
+#     f"{make_documents_folder('NewProspect')}/{current_year}_{month_name}")  # путь к папке с изображениями
+
+(Path.home() / f"Documents/NewProspect/{current_year}_{month_name}").mkdir(parents=True, exist_ok=True)
+way_to_files = (Path.home() / f"Documents/NewProspect/{current_year}_{month_name}")
 
 workbook = Workbook()
 worksheet = workbook.active
