@@ -5,7 +5,6 @@ from requests import Session
 
 from gui_tools.select_month import select_month
 from image_downloader import downloader
-import os
 
 
 # pip install lxml

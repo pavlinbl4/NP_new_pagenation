@@ -1,10 +1,11 @@
 import csv
 import os
-import requests
-from tqdm import tqdm
-from pathlib import Path
-from PIL import Image
 from io import BytesIO
+from pathlib import Path
+
+import requests
+from PIL import Image
+from tqdm import tqdm
 
 
 # pip install requests Pillow
