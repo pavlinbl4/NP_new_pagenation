@@ -31,7 +31,7 @@ worksheet = workbook.active
 worksheet.title = "Sheet with image"  # задаю название вкладки
 
 # in list widths of all columns
-worksheet = set_column_dimensions(worksheet, [30, 600, 40, 30])
+worksheet = set_column_dimensions(worksheet, [15, 38, 21, 5])
 
 thin_border = Border(left=Side(border_style="thin"),
                      right=Side(border_style="thin"),
@@ -42,14 +42,14 @@ thin_border = Border(left=Side(border_style="thin"),
 row = 0
 
 for row, image_path in enumerate(way_to_files.glob("*.JPG"), 1):
-    worksheet.row_dimensions[row].height = 130  # задаю высоту столбца
+    worksheet.row_dimensions[row].height = 86  # задаю высоту столбца
 
     logger.info(image_path)
 
     for column in range(1, 5):
         # cells view
         worksheet[f'{get_column_letter(column)}{row}'].border = thin_border
-        worksheet[f'{get_column_letter(column)}{row}'].font = Font(size=20, bold=True)
+        worksheet[f'{get_column_letter(column)}{row}'].font = Font(size=10, bold=True)
         worksheet[f'{get_column_letter(column)}{row}'].alignment = Alignment(horizontal='center',
                                                                              vertical='center',
                                                                              wrap_text=True)
