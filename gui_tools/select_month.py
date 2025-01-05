@@ -64,8 +64,9 @@ class MonthSelector(QWidget):
     def get_month_num(self):
         selected_month = self.combo_box.currentText()
         month_num = self.month_values[selected_month]
-        print(f"Selected Month Number: {month_num}")
+        # print(f"Selected Month Number: {month_num}")
         self.close()
+        return month_num
 
 
 def select_month():
@@ -73,7 +74,8 @@ def select_month():
     window = MonthSelector()
     window.show()
     app.exec_()
+    return window.get_month_num()
 
 
 if __name__ == '__main__':
-    select_month()
+    print(f"{select_month() = }")
