@@ -22,7 +22,7 @@ def downloader(image_url: str, image_name: str, folder_path: Path):
         rgb_image = image.convert('RGB')
 
         # Step 4: Save the image as JPEG
-        rgb_image.save(folder_path/f"{image_name}.JPG", 'JPEG')
+        rgb_image.save(folder_path / f"{image_name}.JPG", 'JPEG')
 
     except Exception as ex:
         print(ex)
@@ -30,7 +30,7 @@ def downloader(image_url: str, image_name: str, folder_path: Path):
 
 def image_downloader(csv_file_path, month, month_number, current_year, folder_path):
     # create folder to downloading images
-    path_to_folder = folder_path/f"{current_year}_{month_number}"
+    path_to_folder = folder_path / f"{current_year}_{month_number}"
     os.makedirs(path_to_folder, exist_ok=True)
 
     # read data from csv file
@@ -40,4 +40,4 @@ def image_downloader(csv_file_path, month, month_number, current_year, folder_pa
         for row in tqdm(reader, colour='blue', ncols=1000, desc="Image downloading"):
             if month in row[0]:
                 image_url = row[2]
-                downloader(image_url,  f'{row[0]}__{row[1]}',path_to_folder)
+                downloader(image_url, f'{row[0]}__{row[1]}', path_to_folder)
