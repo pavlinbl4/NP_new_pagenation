@@ -1,61 +1,79 @@
-# GUI tool to select month
-import tkinter as tk
+import sys
 from datetime import datetime
 
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QComboBox, QPushButton
 
-def select_month() -> int:
-    window = tk.Tk()
-    window.title("Select a Month")
 
-    # Set the height of the window to 100 pixels
-    window_width = 570
-    window_height = 120
-    screen_width = window.winfo_screenwidth()
-    screen_height = window.winfo_screenheight()
-    x = int(screen_width / 4)
-    y = int(screen_height / 2 - window_height / 2)
-    window.geometry(f"{window_width}x{window_height}+{x}+{y}")
+class MonthSelector(QWidget):
+    def __init__(self):
+        super().__init__()
 
-    # Disable the ability to resize the window
-    window.resizable(False, False)
+        self.setWindowTitle("Select a Month")
+        self.setFixedSize(570, 120)
 
-    month_values = {
-        "January": 1,
-        "February": 2,
-        "March": 3,
-        "April": 4,
-        "May": 5,
-        "June": 6,
-        "July": 7,
-        "August": 8,
-        "September": 9,
-        "October": 10,
-        "November": 11,
-        "December": 12
-    }
+        # Set the position of the window
+        screen_geometry = QApplication.desktop().availableGeometry()
+        screen_width = screen_geometry.width()
+        screen_height = screen_geometry.height()
+        x = int(screen_width / 4)
+        y = int(screen_height / 2 - 120 / 2)
+        self.move(x, y)
 
-    month = tk.StringVar(window)
+        # Month dictionary
+        self.month_values = {
+            "January": 1,
+            "February": 2,
+            "March": 3,
+            "April": 4,
+            "May": 5,
+            "June": 6,
+            "July": 7,
+            "August": 8,
+            "September": 9,
+            "October": 10,
+            "November": 11,
+            "December": 12
+        }
 
-    month_now = datetime.now().strftime('%B')
-    month.set(month_now)
+        self.combo_box = None
+        self.button = None
 
-    option_menu = tk.OptionMenu(window, month, *month_values.keys())
-    # configure the size after creating it by using the config method
-    option_menu.config(width=35, height=3)
-    option_menu.pack()
+        self.init_ui()
 
-    def get_month_num():
-        window.quit()
-        return month_values[month.get()]
+    def init_ui(self):
+        layout = QVBoxLayout()
 
-    tk.Button(window, text="Get Month Number", command=get_month_num).pack()
+        # Current month
+        month_now = datetime.now().strftime('%B')
 
-    window.mainloop()
+        self.combo_box = QComboBox(self)
+        self.combo_box.addItems(self.month_values.keys())
+        self.combo_box.setCurrentText(month_now)
+        self.combo_box.setFixedWidth(400)
 
-    window.withdraw()
-    # window.destroy()
-    return get_month_num()
+        # Button to get month number
+        self.button = QPushButton("Get Month Number", self)
+        self.button.clicked.connect(self.get_month_num)
+
+        # Adding widgets to layout
+        layout.addWidget(self.combo_box)
+        layout.addWidget(self.button)
+
+        self.setLayout(layout)
+
+    def get_month_num(self):
+        selected_month = self.combo_box.currentText()
+        month_num = self.month_values[selected_month]
+        print(f"Selected Month Number: {month_num}")
+        self.close()
+
+
+def select_month():
+    app = QApplication(sys.argv)
+    window = MonthSelector()
+    window.show()
+    app.exec_()
 
 
 if __name__ == '__main__':
-    print(type(select_month()))
+    select_month()
