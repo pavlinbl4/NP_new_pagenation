@@ -19,12 +19,13 @@ from xlsx_tools.set_column_dimensions import set_column_dimensions
 
 month_name = select_month()
 current_year = datetime.now().year
+icloud_folder = Path().home() / 'Library/Mobile Documents/com~apple~CloudDocs/'
 
 # way_to_files = Path(
 #     f"{make_documents_folder('NewProspect')}/{current_year}_{month_name}")  # путь к папке с изображениями
 
-(Path.home() / f"Documents/NewProspect/{current_year}_{month_name}").mkdir(parents=True, exist_ok=True)
-way_to_files = (Path.home() / f"Documents/NewProspect/{current_year}_{month_name}")
+(icloud_folder / f"Documents/NewProspect/{current_year}_{month_name}").mkdir(parents=True, exist_ok=True)
+way_to_files = (icloud_folder / f"Documents/NewProspect/{current_year}_{month_name}")
 
 workbook = Workbook()
 worksheet = workbook.active

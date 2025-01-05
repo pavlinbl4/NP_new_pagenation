@@ -9,6 +9,8 @@ from image_downloader import downloader
 
 # pip install lxml
 
+icloud_folder = Path().home() / 'Library/Mobile Documents/com~apple~CloudDocs/'
+
 def date_convert(month_number):
     months = {
         1: 'Января', 2: 'Февраля', 3: 'Марта', 4: 'Апреля', 5: 'Мая', 6: 'Июня',
@@ -65,12 +67,12 @@ def extract_article_data(base_url, soup, month_number):
         if month_name in article_date:
             print(article_date, article_name, article_image_link)
 
-            (Path.home() / f"Documents/NewProspect/2024_{month_number}").mkdir(parents=True, exist_ok=True)
+            (icloud_folder / f"Documents/NewProspect/2024_{month_number}").mkdir(parents=True, exist_ok=True)
             # download images
             downloader(article_image_link, image_name,
-                       folder_path=(Path.home() / f"Documents/NewProspect/2024_{month_number}"))
+                       folder_path=(icloud_folder / f"Documents/NewProspect/2024_{month_number}"))
 
 
 if __name__ == '__main__':
-    month_number = select_month()
-    main(month_number)
+    _month_number = select_month()
+    main(_month_number)
