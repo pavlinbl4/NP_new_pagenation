@@ -21,9 +21,6 @@ month_name = select_month()
 current_year = datetime.now().year
 icloud_folder = Path().home() / 'Library/Mobile Documents/com~apple~CloudDocs/'
 
-# way_to_files = Path(
-#     f"{make_documents_folder('NewProspect')}/{current_year}_{month_name}")  # путь к папке с изображениями
-
 (icloud_folder / f"Documents/NewProspect/{current_year}_{month_name}").mkdir(parents=True, exist_ok=True)
 way_to_files = (icloud_folder / f"Documents/NewProspect/{current_year}_{month_name}")
 
@@ -38,7 +35,6 @@ thin_border = Border(left=Side(border_style="thin"),
                      right=Side(border_style="thin"),
                      top=Side(border_style="thin"),
                      bottom=Side(border_style="thin"))
-# worksheet.row_dimensions.defaultRowHeight = 130
 
 row = 0
 
