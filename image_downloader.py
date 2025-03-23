@@ -8,9 +8,6 @@ from PIL import Image
 from tqdm import tqdm
 
 
-# pip install requests Pillow
-
-
 def downloader(image_url: str, image_name: str, folder_path: Path):
     try:
         response = requests.get(image_url, stream=True)
